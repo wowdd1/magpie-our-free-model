@@ -491,8 +491,8 @@
     {
       "path": "packages/standalone/channels/business.mjs",
       "originalSha256": "9793bea5c4ce51fb93fbba2dfe3691588ac050ed4727646c99d11977d2a8b457",
-      "sha256": "4d485b8d9d288b6f115e20288e1ece64d47604b8b0ef29a342af67d0d26d909c",
-      "reason": "Distribution-only fallback omits upstream Google/WeChat defaults. Normal startup loads the verified original complete bundle unchanged; no custom local OAuth/App ID configuration is added. Preserve Trae prompt-cache accounting and satisfy WorkBuddy INTL conversation gates after pristine download verification."
+      "sha256": "2ee1bbc33b94546aee9a98ea0f14c711bbe3d3c4d7416d3993f6e71aae2ac97b",
+      "reason": "Distribution-only fallback omits upstream Google/WeChat defaults. Normal startup loads the verified original complete bundle unchanged; no custom local OAuth/App ID configuration is added. Preserve Trae prompt-cache accounting and satisfy WorkBuddy INTL conversation gates after pristine download verification. Neutralize the Claude Code identity signature WorkBuddy blocks (issue #4)."
     },
     {
       "path": "src/vault.js",

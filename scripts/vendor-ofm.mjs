@@ -9,6 +9,7 @@ import { patchChannelSource } from './ofm-channel-source-patch.mjs';
 import { patchEacDiagnostics, patchEacSetupUi } from './ofm-eac-setup-patch.mjs';
 import { applyTraeUsagePatch } from '../src/trae-usage-patch.mjs';
 import { applyWorkbuddyConversationPatch } from '../src/workbuddy-conversation-patch.mjs';
+import { applyWorkbuddyIdentityPatch } from '../src/workbuddy-identity-patch.mjs';
 import { patchFreeLaneCatalog, patchFreeLaneRuntime } from './ofm-free-price-patch.mjs';
 import { patchCompletedToolBlocks } from './ofm-tool-block-patch.mjs';
 
@@ -54,8 +55,8 @@ for (const [file, patch, reason] of [
   ['packages/standalone/eac.mjs', patchEacDiagnostics, 'Expose safe EAC installation diagnostics.'],
   // Apply both verified bundle adaptations in one pass; download hashes still
   // attest the pristine bytes fetched from the upstream pin.
-  ['packages/standalone/channels/business.mjs', source => applyWorkbuddyConversationPatch(applyTraeUsagePatch(source)),
-    'Preserve Trae prompt-cache accounting and satisfy WorkBuddy INTL conversation gates after pristine download verification.'],
+  ['packages/standalone/channels/business.mjs', source => applyWorkbuddyIdentityPatch(applyWorkbuddyConversationPatch(applyTraeUsagePatch(source))),
+    'Preserve Trae prompt-cache accounting, satisfy WorkBuddy INTL conversation gates, and neutralize the Claude Code identity signature WorkBuddy blocks, after pristine download verification.'],
   ...channelPages.map(row => [row.path, patchEacSetupUi, 'Display safe EAC installation diagnostics.']),
   ...['packages/standalone/service.mjs', 'packages/standalone/channels/runtime.mjs', 'packages/standalone/channels/worker.mjs']
     .map(file => [file, source => patchChannelSource(file, source), 'Select verified unchanged upstream channel business in the Worker.'

@@ -35021,6 +35021,14 @@ var BuddyAdapter = class _BuddyAdapter extends LlmAdapter2 {
     if (options.system !== void 0 && options.system.length > 0) {
       messages.unshift({ role: "system", content: options.system });
     }
+    if (this.product.id === "workbuddy") {
+      for (const wbMsg of messages) {
+        if (wbMsg && wbMsg.role === "system" && typeof wbMsg.content === "string") {
+          /* wb-identity-scrub */
+          wbMsg.content = wbMsg.content.replace(/(claude code)\s*,\s*(anthropic['’]s official cli for claude)/gi, "$1. $2");
+        }
+      }
+    }
     if (this.product.id === "workbuddy" && (messages.length === 0 || messages[0].role !== "system")) {
       messages.unshift({ role: "system", content: "You are a helpful assistant." });
     }
